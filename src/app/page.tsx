@@ -1,65 +1,134 @@
-import Image from "next/image";
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { createClient } from '@/lib/supabase/server';
+import { 
+  FolderArchive, 
+  TrendingUp, 
+  ShoppingBag, 
+  Clock, 
+  Users, 
+  Settings 
+} from 'lucide-react';
 
-export default function Home() {
+export default async function RootDashboard() {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  const { data: profile } = await supabase
+    .from('users')
+    .select('role, display_name')
+    .eq('id', session.user.id)
+    .single();
+
+  const role = profile?.role || 'buyer';
+  const displayName = profile?.display_name || session.user.user_metadata?.full_name || 'User';
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold text-foreground">Welcome back, {displayName}</h1>
+        <p className="mt-2 text-foreground opacity-70">
+          Access your portals and system activities below.
+        </p>
+      </div>
+
+      <h2 className="mb-4 text-lg font-semibold text-foreground">Quick Access Portals</h2>
+      
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        
+        {/* --- OPS ADMIN VIEW --- */}
+        {role === 'ops_admin' && (
+          <>
+            <Link 
+              href="/ops-admin/vault" 
+              className="group flex flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-primary hover:shadow-md"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-105">
+                <FolderArchive className="h-6 w-6" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">Operations Vault</h3>
+              <p className="mt-1 text-sm text-foreground opacity-70">
+                Manage, review, and approve master IP records.
+              </p>
+            </Link>
+
+            <Link 
+              href="/ops-admin/users" 
+              className="group flex flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-primary hover:shadow-md"
             >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-105">
+                <Users className="h-6 w-6" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">User Directory</h3>
+              <p className="mt-1 text-sm text-foreground opacity-70">
+                Manage system access and monitor user portfolios.
+              </p>
+            </Link>
+
+            <Link 
+              href="/ops-admin/settings" 
+              className="group flex flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-primary hover:shadow-md"
+            >
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-105">
+                <Settings className="h-6 w-6" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground">System Settings</h3>
+              <p className="mt-1 text-sm text-foreground opacity-70">
+                Configure global parameters and routing logic.
+              </p>
+            </Link>
+          </>
+        )}
+
+        {/* --- SALES REP VIEW --- */}
+        {role === 'sales_rep' && (
+          <Link 
+            href="/sales-crm" 
+            className="group flex flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-primary hover:shadow-md"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-105">
+              <TrendingUp className="h-6 w-6" />
+            </div>
+            <h3 className="text-lg font-semibold text-foreground">Sales Pipeline</h3>
+            <p className="mt-1 text-sm text-foreground opacity-70">
+              Track licensing deals and manage buyer negotiations.
+            </p>
+          </Link>
+        )}
+
+        {/* --- BUYER / CREATOR VIEW --- */}
+        {(role === 'buyer' || role === 'creator') && (
+          <Link 
+            href="/client" 
+            className="group flex flex-col rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-primary hover:shadow-md"
           >
-            Documentation
-          </a>
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-105">
+              <ShoppingBag className="h-6 w-6" />
+            </div>
+            <h3 className="text-lg font-semibold text-foreground">Client Portal</h3>
+            <p className="mt-1 text-sm text-foreground opacity-70">
+              View your dashboard, browse the marketplace, and manage requests.
+            </p>
+          </Link>
+        )}
+
+      </div>
+
+      {/* --- RECENT ACTIVITY SECTION --- */}
+      <div className="mt-12">
+        <h2 className="mb-6 text-lg font-semibold text-foreground">Recent Activity</h2>
+        <div className="flex h-48 flex-col items-center justify-center rounded-xl border border-dashed border-border bg-surface/50 text-center">
+          <Clock className="mb-3 h-8 w-8 text-foreground opacity-30" />
+          <p className="text-sm font-medium text-foreground opacity-70">No recent activity to display</p>
+          <p className="mt-1 text-xs text-foreground opacity-50">Your system notifications and updates will appear here.</p>
         </div>
-      </main>
+      </div>
+
     </div>
   );
 }
