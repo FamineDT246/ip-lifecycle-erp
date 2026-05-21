@@ -3,28 +3,24 @@
 A B2B Enterprise Resource Planning (ERP) platform designed to manage the end-to-end lifecycle of intellectual property, from initial registration to commercial licensing and deal negotiation.
 
 ## Overview
-
 IP-Lifecycle-ERP streamlines complex business transactions by providing distinct, role-based portals for Buyers, Creators, Sales Representatives, and Operations Administrators. The platform eliminates offline friction by moving negotiations, contract drafting, and asset delivery into secure, centralized Deal Rooms.
 
-## Key Features
+## Features
+- **Role-Based Access (RBAC):** Secure data isolation between stakeholders.
+- **Kanban Pipeline:** Real-time sales stage tracking for deal management.
+- **Secure Deal Rooms:** Workspace for contract generation and clause amendments.
+- **IP Vault:** Secure cloud storage for internal legal docs and commercial assets.
 
-- **Multi-Tenant Architecture:** Secure, role-based access control (RBAC) ensuring data isolation between buyers, creators, and administrators.
-- **Interactive Sales Pipeline:** A drag-and-drop Kanban board for sales representatives to track leads and update deal stages in real-time.
-- **Secure Deal Rooms:** Dedicated negotiation workspaces featuring dynamic contract generation, clause amendment tracking, and financial quoting.
-- **Digital Asset Vault:** Secure upload and storage for both internal legal documentation and deliverable commercial assets.
-- **Dynamic Access Control:** Database-level Row Level Security (RLS) policies to ensure strict data governance.
-
-## Tech Stack
-
-- **Framework:** Next.js (App Router)
-- **Frontend:** React.js, Tailwind CSS
-- **Backend & Database:** Supabase (PostgreSQL)
-- **Authentication:** Supabase Auth
-- **Form Management & Validation:** React Hook Form, Zod
-- **State Management:** Zustand
-
-## Getting Started
-
-1. Clone the repository:
+## Quick Setup
+1. **Clone & Install:**
    ```bash
-   git clone [https://github.com/FamineDT246/ip-lifecycle-erp.git](https://github.com/your-username/ip-lifecycle-erp.git)
+   git clone [https://github.com/FamineDT246/ip-lifecycle-erp.git](https://github.com/FamineDT246/ip-lifecycle-erp.git)
+   cd ip-lifecycle-erp
+   npm install
+   
+2.Configure: Create a .env.local file with your Supabase credentials:
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+3.Launch:
+    npm run dev
