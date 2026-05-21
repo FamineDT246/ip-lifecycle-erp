@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IP-Lifecycle-ERP
+
+A B2B Enterprise Resource Planning (ERP) platform designed to manage the end-to-end lifecycle of intellectual property, from initial registration to commercial licensing and deal negotiation.
+
+## Overview
+
+IP-Lifecycle-ERP streamlines complex business transactions by providing distinct, role-based portals for Buyers, Creators, Sales Representatives, and Operations Administrators. The platform eliminates offline friction by moving negotiations, contract drafting, and asset delivery into secure, centralized Deal Rooms.
+
+## Key Features
+
+- **Multi-Tenant Architecture:** Secure, role-based access control (RBAC) ensuring data isolation between buyers, creators, and administrators.
+- **Interactive Sales Pipeline:** A drag-and-drop Kanban board for sales representatives to track leads and update deal stages in real-time.
+- **Secure Deal Rooms:** Dedicated negotiation workspaces featuring dynamic contract generation, clause amendment tracking, and financial quoting.
+- **Digital Asset Vault:** Secure upload and storage for both internal legal documentation and deliverable commercial assets.
+- **Dynamic Access Control:** Database-level Row Level Security (RLS) policies to ensure strict data governance.
+
+## Tech Stack
+
+- **Framework:** Next.js (App Router)
+- **Frontend:** React.js, Tailwind CSS
+- **Backend & Database:** Supabase (PostgreSQL)
+- **Authentication:** Supabase Auth
+- **Form Management & Validation:** React Hook Form, Zod
+- **State Management:** Zustand
 
 ## Getting Started
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repository:
+   ```bash
+   git clone [https://github.com/FamineDT246/ip-lifecycle-erp.git](https://github.com/your-username/ip-lifecycle-erp.git)
